@@ -9,7 +9,6 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 
 import { env } from "@/env.mjs";
 import { db } from "@/server/db";
-import { User } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -23,6 +22,10 @@ declare module "next-auth" {
       id: string;
       fullName?: string | null;
     };
+  }
+  interface User {
+    id: string;
+    fullName?: string | null;
   }
 }
 
@@ -38,7 +41,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          name: (user as User)?.fullName,
+          name: user?.fullName,
           id: user.id,
         },
       };
