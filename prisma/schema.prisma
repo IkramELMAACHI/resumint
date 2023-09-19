@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_URL")
 }
 
 model Example {
@@ -48,10 +49,15 @@ model Session {
 
 model User {
     id            String    @id @default(cuid())
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
     name          String?
+    fullName      String?
+    // properties
     email         String?   @unique
     emailVerified DateTime?
-    image         String?
+    profilePic    String?
+    // next-auth
     accounts      Account[]
     sessions      Session[]
 }
