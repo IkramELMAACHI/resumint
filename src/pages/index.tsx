@@ -5,7 +5,8 @@ import { BsArrowRightShort } from "react-icons/bs";
 
 import { CreateAccount } from "@/components/ui/create-account";
 import Layout from "@/layouts/layout";
-import { Link, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });

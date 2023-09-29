@@ -1,7 +1,8 @@
-import AuthLayout from "@/layouts/auth-layout";
-import { Link } from "lucide-react";
 import React from "react";
+import Link from "next/link";
+
 import { BsArrowLeftShort } from "react-icons/bs";
+import AuthLayout from "@/layouts/auth-layout";
 
 export default function Dashboards() {
   return (
