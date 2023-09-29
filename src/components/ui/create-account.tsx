@@ -11,8 +11,9 @@ import {
   CardTitle,
 } from "./card";
 import { BiLogoLinkedin } from "react-icons/bi";
-import { Label } from "@radix-ui/react-label";
+
 import { Input } from "./input";
+import { Label } from "./label";
 
 export function CreateAccount() {
   return (
