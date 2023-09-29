@@ -1,16 +1,14 @@
 import { getProviders, signOut, useSession } from "next-auth/react";
-import Head from "next/head";
 import * as React from "react";
 import { BiLogOut } from "react-icons/bi";
 import { BsArrowRightShort } from "react-icons/bs";
 
-import { api } from "@/utils/api";
 import { CreateAccount } from "@/components/ui/create-account";
 import Layout from "@/layouts/layout";
-import { Loader } from "lucide-react";
+import { Link, Loader } from "lucide-react";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <Layout>
@@ -44,7 +42,7 @@ const HomeContent = () => {
         <a
           href="#"
           className="flex items-center space-x-2 text-red-500"
-          onClick={() => signOut()}
+          onClick={() => void signOut()}
         >
           <BiLogOut size={14} />
           <p>Sign out</p>
@@ -54,13 +52,13 @@ const HomeContent = () => {
       <div className="flex flex-col gap-5">
         <h1 className="text-xl">Hello {sessionData.user?.name}</h1>
 
-        <a
+        <Link
           href="/dashboards"
           className="flex items-center space-x-2 text-blue-500"
         >
           <p>Go to Dashboard</p>
           <BsArrowRightShort size={24} />
-        </a>
+        </Link>
       </div>
     </>
   );

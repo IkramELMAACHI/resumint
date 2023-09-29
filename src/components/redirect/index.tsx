@@ -5,7 +5,7 @@ interface RedirectComponentI {
   to: string;
   children?: React.ReactNode;
   mode?: "push" | "replace";
-  query?: Record<string, any>;
+  query?: Record<string, string>;
 }
 
 export default function RedirectComponent({
@@ -18,15 +18,16 @@ export default function RedirectComponent({
 
   useEffect(() => {
     if (mode === "push") {
-      push(to);
+      void push(to);
+
       return;
     }
 
-    replace({
+    void replace({
       pathname: to,
       query,
     });
-  }, []);
+  });
 
   return <>{children}</>;
 }

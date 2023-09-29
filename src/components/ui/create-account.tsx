@@ -27,7 +27,7 @@ export function CreateAccount() {
         <Button
           variant="outline"
           className="flex items-center space-x-2 bg-blue-600 text-white hover:bg-blue-600  hover:text-white"
-          onClick={() => signIn("linkedin")}
+          onClick={() => void signIn("linkedin")}
         >
           <BiLogoLinkedin
             className="rounded border bg-white text-blue-600"
