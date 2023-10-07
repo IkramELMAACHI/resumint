@@ -7,33 +7,30 @@ import { CreateAccount } from "@/components/ui/create-account";
 import Layout from "@/layouts/layout";
 import { Loader } from "lucide-react";
 import Link from "next/link";
+import { NextPageWithLayout } from "./_app";
 
-export default function Home() {
+const Home: NextPageWithLayout = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const { data: sessionData, status } = useSession();
 
   if (status === "loading") {
     return (
-      <Layout>
-        <div className="flex min-h-screen w-full items-center justify-center">
-          <Loader />
-        </div>
-      </Layout>
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <Loader />
+      </div>
     );
   }
 
   if (!sessionData) {
     return (
-      <Layout>
-        <div className="flex items-center justify-center">
-          <CreateAccount />
-        </div>
-      </Layout>
+      <div className="flex items-center justify-center">
+        <CreateAccount />
+      </div>
     );
   }
 
   return (
-    <Layout>
+    <>
       <div className="ml-auto">
         <a
           href="#"
@@ -44,7 +41,6 @@ export default function Home() {
           <p>Sign out</p>
         </a>
       </div>
-
       <div className="flex flex-col gap-5">
         <h1 className="text-xl">Hello {sessionData.user?.name}</h1>
 
@@ -56,6 +52,12 @@ export default function Home() {
           <BsArrowRightShort size={24} />
         </Link>
       </div>
-    </Layout>
+    </>
   );
-}
+};
+
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default Home;
