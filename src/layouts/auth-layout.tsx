@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import RedirectComponent from "@/components/redirect";
 import { Loader } from "lucide-react";
 
 interface AuthLayoutI {
@@ -8,8 +7,7 @@ interface AuthLayoutI {
 }
 
 export default function AuthLayout({ children }: AuthLayoutI) {
-  const router = useRouter();
-
+  const { push } = useRouter();
   const { status } = useSession();
 
   if (status === "loading") {
@@ -21,7 +19,7 @@ export default function AuthLayout({ children }: AuthLayoutI) {
   }
 
   if (status === "unauthenticated") {
-    return <RedirectComponent to="/" query={{ returnUrl: router.asPath }} />;
+    void push("/");
   }
 
   return <>{children}</>;
