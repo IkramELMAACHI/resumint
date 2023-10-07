@@ -1,13 +1,15 @@
 import { signOut, useSession } from "next-auth/react";
-import * as React from "react";
+import type { ReactElement } from "react";
+
+import Link from "next/link";
+
+import { Loader } from "lucide-react";
 import { BiLogOut } from "react-icons/bi";
 import { BsArrowRightShort } from "react-icons/bs";
 
+import type { NextPageWithLayout } from "./_app";
 import { CreateAccount } from "@/components/ui/create-account";
 import Layout from "@/layouts/layout";
-import { Loader } from "lucide-react";
-import Link from "next/link";
-import { NextPageWithLayout } from "./_app";
 
 const Home: NextPageWithLayout = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -56,7 +58,7 @@ const Home: NextPageWithLayout = () => {
   );
 };
 
-Home.getLayout = function getLayout(page: React.ReactElement) {
+Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 

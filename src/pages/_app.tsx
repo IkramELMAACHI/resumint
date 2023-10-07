@@ -1,14 +1,14 @@
-import { ReactElement, ReactNode } from "react";
-import { NextPage } from "next";
-import { type Session } from "next-auth";
+import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from "next";
+import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { AppProps, type AppType } from "next/app";
+import type { AppProps, AppType } from "next/app";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import { api } from "@/lib/api";
 import "@/styles/globals.css";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
@@ -20,10 +20,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) => {
-  const getLayout = Component.getLayout || ((page) => page);
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session as Session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>

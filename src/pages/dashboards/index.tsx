@@ -1,10 +1,10 @@
-import React from "react";
+import type { ReactElement } from "react";
 import Link from "next/link";
 
 import { BsArrowLeftShort } from "react-icons/bs";
 import AuthLayout from "@/layouts/auth-layout";
 import Layout from "@/layouts/layout";
-import { NextPageWithLayout } from "../_app";
+import type { NextPageWithLayout } from "../_app";
 
 const Dashboards: NextPageWithLayout = () => {
   return (
@@ -19,7 +19,7 @@ const Dashboards: NextPageWithLayout = () => {
   );
 };
 
-Dashboards.getLayout = function getLayout(page: React.ReactElement) {
+Dashboards.getLayout = function getLayout(page: ReactElement) {
   return (
     <AuthLayout>
       <Layout>{page}</Layout>
