@@ -57,7 +57,9 @@ export function CreateAccount() {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Create account</Button>
+        <Button className="w-full" disabled>
+          Create account
+        </Button>
       </CardFooter>
     </Card>
   );
