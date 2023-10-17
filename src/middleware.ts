@@ -26,13 +26,13 @@ export default async function middleware(req: NextRequest) {
   });
 
   if (!token?.email) {
-    if (path.startsWith("/dashboards")) {
+    if (path.startsWith("/resumes")) {
       return NextResponse.redirect(new URL(`/login`, req.url));
     }
   } else {
     // there is a token
     if (path === "/login") {
-      return NextResponse.redirect(new URL("/dashboards", req.url));
+      return NextResponse.redirect(new URL("/resumes", req.url));
     }
   }
 }
