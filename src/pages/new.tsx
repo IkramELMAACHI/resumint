@@ -1,7 +1,7 @@
 import { useState, type ReactElement } from "react";
 import Image from "next/image";
 import Layout from "@/layouts/layout";
-import type { NextPageWithLayout } from "../_app";
+import type { NextPageWithLayout } from "./_app";
 import {
   Dialog,
   DialogContent,

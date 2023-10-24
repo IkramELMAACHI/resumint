@@ -1,8 +1,17 @@
 import Head from "next/head";
 import React from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface LayoutI {
   children: React.ReactNode;
@@ -25,10 +34,10 @@ export default function Layout({ children }: LayoutI) {
 
 function Navbar() {
   const { data } = useSession();
-
+  const { push } = useRouter();
   return (
     <nav className="flex flex-1 justify-between border border-gray-200 bg-white px-3 py-2">
-      <a href="https://flowbite.com/" className="flex items-center">
+      <a href="/" className="flex items-center">
         {/* <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="mr-3 h-8"
@@ -40,17 +49,40 @@ function Navbar() {
       </a>
 
       {data?.user ? (
-        <div className="flex items-center space-x-2">
-          {/* TODO: if there is no user? */}
-          <p className="text-sm">{data.user.name}</p>
-          <Avatar>
-            <AvatarImage
-              sizes="sm"
-              src={data.user.image ?? "/"}
-              alt="@shadcn"
-            />
-          </Avatar>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className="flex items-center space-x-2">
+              <p className="text-sm">{data.user.name}</p>
+              <Avatar>
+                <AvatarImage
+                  sizes="sm"
+                  src={data.user.image ?? "/"}
+                  alt="@shadcn"
+                />
+              </Avatar>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void push("/resumes");
+              }}
+            >
+              My resumes
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                void signOut();
+              }}
+              className="!hover:bg-red-50 !hover:text-red-600 text-red-500"
+            >
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Link href="/login">Login</Link>
       )}
