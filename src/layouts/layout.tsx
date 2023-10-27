@@ -37,7 +37,7 @@ function Navbar() {
   const { push } = useRouter();
   return (
     <nav className="flex flex-1 justify-between border border-gray-200 bg-white px-3 py-2">
-      <a href="/" className="flex items-center">
+      <Link href="/" className="flex items-center">
         {/* <img
             src="https://flowbite.com/docs/images/logo.svg"
             className="mr-3 h-8"
@@ -46,7 +46,7 @@ function Navbar() {
         <span className="self-center whitespace-nowrap text-2xl text-green-600">
           Resumint
         </span>
-      </a>
+      </Link>
 
       {data?.user ? (
         <DropdownMenu>
