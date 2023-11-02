@@ -26,7 +26,7 @@ const Resumes: NextPageWithLayout = () => {
 
         <div
           onClick={() => {
-            void push("/resumes/new");
+            void push("/new");
           }}
           className="flex cursor-pointer items-center justify-center space-x-2 rounded border border-dashed p-5"
         >

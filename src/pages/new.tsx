@@ -57,7 +57,9 @@ const Templates = () => {
 
                   <Dialog>
                     <DialogTrigger>
-                      <Button variant="default">Use this template</Button>
+                      <span className="cursor-pointer rounded bg-slate-800 p-3 text-sm text-white">
+                        Use this template
+                      </span>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader className="gap-4">
@@ -77,7 +79,9 @@ const Templates = () => {
                       </DialogHeader>
                       <div className="ml-auto flex items-center space-x-2">
                         <DialogTrigger>
-                          <Button variant="secondary">Cancel</Button>
+                          <span className="cursor-pointer rounded bg-slate-100 p-3 text-sm">
+                            Cancel
+                          </span>
                         </DialogTrigger>
                         <Button variant="default">Create new resume</Button>
                       </div>
