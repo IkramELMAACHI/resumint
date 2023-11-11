@@ -7,11 +7,11 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { signIn } from "next-auth/react";
 
-import { BiLogoLinkedin } from "react-icons/bi";
+import { BiLogoGithub, BiLogoLinkedin } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LogIn() {
   return (
@@ -34,6 +34,25 @@ export default function LogIn() {
               size={25}
             />
             <p className="text-sm">Sign in with LinkedIn</p>
+          </Button>
+          <Button
+            variant="outline"
+            className="flex items-center space-x-2"
+            onClick={() => void signIn("google")}
+          >
+            <FcGoogle size={25} />
+            <p className="text-sm">Sign in with Google</p>
+          </Button>
+          <Button
+            variant="outline"
+            className="flex items-center space-x-2 "
+            onClick={() => void signIn("github")}
+          >
+            <BiLogoGithub
+              // className="rounded border bg-white text-blue-600"
+              size={25}
+            />
+            <p className="text-sm">Sign in with Github</p>
           </Button>
         </CardContent>
       </Card>

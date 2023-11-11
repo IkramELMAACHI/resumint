@@ -6,6 +6,8 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 
 import { env } from "@/env.mjs";
 import { db } from "@/server/db";
@@ -44,6 +46,14 @@ export const authOptions: NextAuthOptions = {
     LinkedInProvider({
       clientId: env.LINKEDIN_CLIENT_ID,
       clientSecret: env.LINKEDIN_CLIENT_SECRET,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    }),
+    GithubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
   ],
 };
