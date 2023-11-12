@@ -1,4 +1,4 @@
-import { useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import Link from "next/link";
 import Layout from "@/layouts/layout";
 import type { NextPageWithLayout } from "./_app";
@@ -19,7 +19,6 @@ const NewResume: NextPageWithLayout = () => {
 };
 
 const Templates = () => {
-  const [state, setState] = useState({ name: "" });
   return (
     <>
       <div className="grid grid-cols-3 gap-5">

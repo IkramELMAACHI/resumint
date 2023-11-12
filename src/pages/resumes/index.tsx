@@ -4,6 +4,7 @@ import type { NextPageWithLayout } from "../_app";
 import Layout from "@/layouts/layout";
 import { BiPlus } from "react-icons/bi";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Resumes: NextPageWithLayout = () => {
   const { push } = useRouter();
@@ -15,12 +16,14 @@ const Resumes: NextPageWithLayout = () => {
       <div className="grid grid-cols-4 gap-5">
         {[1, 2, 3].map((i) => {
           return (
-            <div
-              key={i}
-              className="flex items-center justify-center rounded border p-5"
-            >
-              <p>Resume - {i}</p>
-            </div>
+            <Link href={`/resumes/${i}`}>
+              <p
+                key={i}
+                className="flex items-center justify-center rounded border p-5"
+              >
+                <p>Resume - {i}</p>
+              </p>
+            </Link>
           );
         })}
 
