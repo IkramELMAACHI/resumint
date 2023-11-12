@@ -1,118 +1,27 @@
-import { useState, type ReactElement } from "react";
+import React, { useState, type ReactElement } from "react";
 import clsx from "clsx";
 import { useDisclosure } from "@mantine/hooks";
 import type { NextPageWithLayout } from "../../_app";
 import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import Layout from "@/layouts/layout";
 import {
+  Building,
   GraduationCap,
   LanguagesIcon,
   Link,
+  type LucideIcon,
   StarIcon,
   UserCircleIcon,
 } from "lucide-react";
+import { Dropzone } from "@mantine/dropzone";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
-import { BiBuilding } from "react-icons/bi";
-import { Dropzone } from "@mantine/dropzone";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { DateInput } from "@mantine/dates";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Checkbox, Select, TextInput, Textarea } from "@mantine/core";
 
-const PROFILE_SECTIONS = [
-  {
-    title: "Personal Informations",
-    value: "BASE_INFOS",
-    Icon: UserCircleIcon,
-    Component: ProfileInformations,
-  },
-  {
-    title: "Socials",
-    value: "SOCIALS",
-    Icon: Link,
-    Component: Socials,
-  },
-  {
-    title: "Educations",
-    value: "EDUCATIONS",
-    Icon: GraduationCap,
-    Component: Educations,
-  },
-  {
-    title: "Experiences",
-    value: "EXPERIENCES",
-    Icon: BiBuilding,
-    Component: Experiences,
-  },
-  {
-    title: "Skills",
-    value: "SKILLS",
-    Icon: StarIcon,
-    Component: Skills,
-  },
-  {
-    title: "Languages",
-    value: "LANGUAGES",
-    Icon: LanguagesIcon,
-    Component: Languages,
-  },
-];
-
-const ResumeEditor: NextPageWithLayout = () => {
-  return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-medium">Resume editor</h1>
-      {/* CVs */}
-      <div className="flex gap-6">
-        <div className="flex w-1/2 flex-col gap-6">
-          {PROFILE_SECTIONS?.map((section, i) => {
-            return <SectionItem section={section} key={i} />;
-          })}
-        </div>
-
-        <div className="flex h-[842px] w-[595px] flex-1 items-center justify-center rounded border p-5">
-          CV Preview
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const PROFILE = {
-  profilePic: "https://github.com/shadcn.png",
-};
-
-const SectionItem = ({ section }: { section: Record<string, any> }) => {
-  const [opened, { toggle }] = useDisclosure(false);
-  const { title, value, Icon, Component } = section;
-  return (
-    <div className="flex flex-col gap-5 rounded border p-4">
-      <div
-        className={clsx(
-          "-m-3 flex cursor-pointer items-center justify-between bg-slate-50/50 p-3",
-          {
-            "border-b": opened,
-          },
-        )}
-        onClick={toggle}
-      >
-        <div className="flex items-center space-x-2">
-          <Icon size={16} className="text-slate-500" />
-          <h1>{title}</h1>
-        </div>
-        <IoIosArrowDown
-          className={clsx("", {
-            "rotate-180": opened,
-          })}
-        />
-      </div>
-      {opened ? <Component /> : null}
-    </div>
-  );
-};
-
-function ProfileInformations() {
+const ProfileInformations = () => {
   const { profilePic } = PROFILE;
 
   return (
@@ -153,9 +62,9 @@ function ProfileInformations() {
       </div>
     </div>
   );
-}
+};
 
-function Socials() {
+const Socials = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <TextInput label="Portfolio" />
@@ -163,9 +72,9 @@ function Socials() {
       <TextInput label="LinkedIn" />
     </div>
   );
-}
+};
 
-function Educations() {
+const Educations = () => {
   const [date, setDate] = useState<{
     startDate: Date | null;
     endDate: Date | null;
@@ -210,9 +119,9 @@ function Educations() {
       </div>
     </div>
   );
-}
+};
 
-function Experiences() {
+const Experiences = () => {
   const [date, setDate] = useState<{
     startDate: Date | null;
     endDate: Date | null;
@@ -257,18 +166,18 @@ function Experiences() {
       </div>
     </div>
   );
-}
+};
 
-function Languages() {
+const Languages = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <TextInput label="Language" />
       <Select data={["A1", "A2", "B1", "B2", "C1", "C2"]} label="Level" />
     </div>
   );
-}
+};
 
-function Skills() {
+const Skills = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <TextInput label="Language" />
@@ -278,7 +187,106 @@ function Skills() {
       />
     </div>
   );
+};
+
+const PROFILE_SECTIONS = [
+  {
+    title: "Personal Informations",
+    value: "BASE_INFOS",
+    Icon: UserCircleIcon,
+    Component: ProfileInformations,
+  },
+  {
+    title: "Socials",
+    value: "SOCIALS",
+    Icon: Link,
+    Component: Socials,
+  },
+  {
+    title: "Educations",
+    value: "EDUCATIONS",
+    Icon: GraduationCap,
+    Component: Educations,
+  },
+  {
+    title: "Experiences",
+    value: "EXPERIENCES",
+    Icon: Building,
+    Component: Experiences,
+  },
+  {
+    title: "Skills",
+    value: "SKILLS",
+    Icon: StarIcon,
+    Component: Skills,
+  },
+  {
+    title: "Languages",
+    value: "LANGUAGES",
+    Icon: LanguagesIcon,
+    Component: Languages,
+  },
+];
+
+const PROFILE = {
+  profilePic: "https://github.com/shadcn.png",
+};
+
+const ResumeEditor: NextPageWithLayout = () => {
+  return (
+    <div className="flex flex-col gap-6">
+      <h1 className="text-2xl font-medium">Resume editor</h1>
+      {/* CVs */}
+      <div className="flex gap-6">
+        <div className="flex w-1/2 flex-col gap-6">
+          {PROFILE_SECTIONS?.map((section, i) => {
+            return <SectionItem section={section} key={i} />;
+          })}
+        </div>
+
+        <div className="flex h-[842px] w-[595px] flex-1 items-center justify-center rounded border p-5">
+          CV Preview
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface SectionItemI {
+  title: string;
+  value: string;
+  Icon: LucideIcon;
+  Component: () => React.ReactNode;
 }
+
+const SectionItem = ({ section }: { section: SectionItemI }) => {
+  const [opened, { toggle }] = useDisclosure(false);
+  const { title, Icon, Component } = section;
+  return (
+    <div className="flex flex-col gap-5 rounded border p-4">
+      <div
+        className={clsx(
+          "-m-3 flex cursor-pointer items-center justify-between bg-slate-50/50 p-3",
+          {
+            "border-b": opened,
+          },
+        )}
+        onClick={toggle}
+      >
+        <div className="flex items-center space-x-2">
+          <Icon size={16} className="text-slate-500" />
+          <h1>{title}</h1>
+        </div>
+        <IoIosArrowDown
+          className={clsx("", {
+            "rotate-180": opened,
+          })}
+        />
+      </div>
+      {opened && Component ? <Component /> : null}
+    </div>
+  );
+};
 
 ResumeEditor.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;

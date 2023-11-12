@@ -16,7 +16,7 @@ const Resumes: NextPageWithLayout = () => {
       <div className="grid grid-cols-4 gap-5">
         {[1, 2, 3].map((i) => {
           return (
-            <Link href={`/resumes/${i}`}>
+            <Link href={`/resumes/${i}`} key={i}>
               <p
                 key={i}
                 className="flex items-center justify-center rounded border p-5"
