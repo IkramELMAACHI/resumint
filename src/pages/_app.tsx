@@ -4,11 +4,9 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps, AppType } from "next/app";
 import { ThemeProvider } from "@/components/theme-provider";
-import { MantineProvider } from "@mantine/core";
 
 import { api } from "@/lib/api";
 import "@/styles/globals.css";
-import "@mantine/core/styles.css";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -25,13 +23,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <MantineProvider>
-      <SessionProvider session={session as Session}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {getLayout(<Component {...pageProps} />)}
-        </ThemeProvider>
-      </SessionProvider>
-    </MantineProvider>
+    <SessionProvider session={session as Session}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {getLayout(<Component {...pageProps} />)}
+      </ThemeProvider>
+    </SessionProvider>
   );
 };
 

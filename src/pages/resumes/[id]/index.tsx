@@ -1,8 +1,6 @@
 import React, { useState, type ReactElement } from "react";
 import clsx from "clsx";
-import { useDisclosure } from "@mantine/hooks";
 import type { NextPageWithLayout } from "../../_app";
-import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import Layout from "@/layouts/layout";
 import {
   Building,
@@ -13,52 +11,54 @@ import {
   StarIcon,
   UserCircleIcon,
 } from "lucide-react";
-import { Dropzone } from "@mantine/dropzone";
 import { IoIosArrowDown } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
 
-import { DateInput } from "@mantine/dates";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Checkbox, Select, TextInput, Textarea } from "@mantine/core";
+import { TextInput } from "@/components/ui/text-input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const ProfileInformations = () => {
   const { profilePic } = PROFILE;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-1 flex-col gap-5">
       <div className="flex gap-5">
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-slate-600">Picture</p>
-          <Dropzone
-            onDrop={(files) => console.log("accepted files", files)}
-            onReject={(files) => console.log("rejected files", files)}
-            maxSize={3 * 1024 ** 2}
-            accept={IMAGE_MIME_TYPE}
-          >
-            <Avatar className="h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded border hover:border-slate-500 hover:p-0.5">
-              {false ? (
-                <AvatarImage src={profilePic} />
-              ) : (
-                <BsPersonCircle className="text-slate-500" />
-              )}
-            </Avatar>
-          </Dropzone>
+          <Label className="text-sm text-slate-600">Picture</Label>
+
+          <Avatar className="h-[120px] w-[120px] cursor-pointer flex-col items-center justify-center rounded border hover:border-slate-500 hover:p-0.5">
+            {false ? (
+              <AvatarImage src={profilePic} />
+            ) : (
+              <BsPersonCircle className="text-slate-500" />
+            )}
+          </Avatar>
         </div>
         <div className="flex flex-1 flex-col gap-5">
           <div className="flex flex-1 gap-5">
-            <TextInput label="First Name" className="flex-1" />
-            <TextInput label="Last Name" className="flex-1" />
+            <TextInput title="First Name" className="flex-1" />
+            <TextInput title="Last Name" className="flex-1" />
           </div>
-          <TextInput label="Adress Email" />
+          <TextInput title="Adress Email" />
         </div>
       </div>
-      <TextInput label="Job Title" />
-      <TextInput label="Phone" />
+      <TextInput title="Job Title" />
+      <TextInput title="Phone" />
 
-      <Textarea label="Profile Description" />
-      <div className="flex space-x-2">
-        <TextInput label="City" className="flex-1" />
-        <TextInput label="Country" className="flex-1" />
+      <Textarea title="Profile Description" />
+      <div className="flex flex-1 gap-5">
+        <TextInput title="City" className="flex-1" />
+        <TextInput title="Country" className="flex-1" />
       </div>
     </div>
   );
@@ -67,53 +67,56 @@ const ProfileInformations = () => {
 const Socials = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
-      <TextInput label="Portfolio" />
-      <TextInput label="Github" />
-      <TextInput label="LinkedIn" />
+      <TextInput title="Portfolio" />
+      <TextInput title="Github" />
+      <TextInput title="LinkedIn" />
     </div>
   );
 };
 
 const Educations = () => {
   const [date, setDate] = useState<{
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string;
+    endDate: string;
     isCurrent: boolean;
   }>({
-    startDate: null,
-    endDate: null,
+    startDate: "",
+    endDate: "",
     isCurrent: false,
   });
 
   return (
     <div className="flex flex-1 flex-col gap-5">
-      <TextInput label="Title" />
+      <TextInput title="Title" />
 
-      <Textarea label="Description" />
+      <Textarea title="Description" />
 
       <div className="flex items-center gap-2 space-x-5">
-        <DateInput
+        <TextInput
+          // type="date"
           value={date.startDate}
-          onChange={(d) => {
-            setDate({ ...date, startDate: d });
+          onChange={(e) => {
+            setDate({ ...date, startDate: e.target.value });
           }}
-          label="Start date"
+          title="Start date"
           className="flex-1"
         />
-        <DateInput
+        <TextInput
+          type="date"
           value={date.endDate}
-          disabled={date.isCurrent}
-          onChange={(d) => {
-            setDate({ ...date, endDate: d });
+          onChange={(e) => {
+            setDate({ ...date, endDate: e.target.value });
           }}
-          label="Start date"
+          title="End date"
           className="flex-1"
         />
+
         <Checkbox
-          label="Present"
+          // title="Present"
           checked={date?.isCurrent}
           onChange={(event) => {
-            setDate({ ...date, isCurrent: event.currentTarget.checked });
+            console.log({ event });
+            // setDate({ ...date, isCurrent: event.currentTarget.checked });
           }}
         />
       </div>
@@ -123,44 +126,45 @@ const Educations = () => {
 
 const Experiences = () => {
   const [date, setDate] = useState<{
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string;
+    endDate: string;
     isCurrent: boolean;
   }>({
-    startDate: null,
-    endDate: null,
+    startDate: "",
+    endDate: "",
     isCurrent: false,
   });
 
   return (
     <div className="flex flex-1 flex-col gap-5">
-      <TextInput label="Title" />
-
-      <Textarea label="Description" />
-
+      <TextInput title="Title" />
+      <Textarea title="Description" />
       <div className="flex items-center gap-2 space-x-5">
-        <DateInput
+        <TextInput
+          // type="date"
           value={date.startDate}
-          onChange={(d) => {
-            setDate({ ...date, startDate: d });
+          onChange={(e) => {
+            setDate({ ...date, startDate: e.target.value });
           }}
-          label="Start date"
+          title="Start date"
           className="flex-1"
         />
-        <DateInput
+        <TextInput
+          type="date"
           value={date.endDate}
-          disabled={date.isCurrent}
-          onChange={(d) => {
-            setDate({ ...date, endDate: d });
+          onChange={(e) => {
+            setDate({ ...date, endDate: e.target.value });
           }}
-          label="Start date"
+          title="End date"
           className="flex-1"
         />
+
         <Checkbox
-          label="Present"
+          title="Present"
           checked={date?.isCurrent}
-          onChange={(event) => {
-            setDate({ ...date, isCurrent: event.currentTarget.checked });
+          onCheckedChange={(checked) => {
+            console.log({ checked });
+            // setDate({ ...date, isCurrent: checked });
           }}
         />
       </div>
@@ -171,8 +175,22 @@ const Experiences = () => {
 const Languages = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
-      <TextInput label="Language" />
-      <Select data={["A1", "A2", "B1", "B2", "C1", "C2"]} label="Level" />
+      <TextInput title="Language" />
+      <Label>Levels</Label>
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Level" />
+        </SelectTrigger>
+        <SelectContent>
+          {["A1", "A2", "B1", "B2", "C1", "C2"].map((s, i) => {
+            return (
+              <SelectItem value={s} key={i}>
+                {s}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
     </div>
   );
 };
@@ -180,11 +198,21 @@ const Languages = () => {
 const Skills = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
-      <TextInput label="Language" />
-      <Select
-        data={["Novice", "Intermediate", "Proficient", "Expert"]}
-        label="Level"
-      />
+      <TextInput title="Language" />
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Level" />
+        </SelectTrigger>
+        <SelectContent>
+          {["Novice", "Intermediate", "Proficient", "Expert"].map((s, i) => {
+            return (
+              <SelectItem value={s} key={i}>
+                {s}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
     </div>
   );
 };
@@ -260,10 +288,10 @@ interface SectionItemI {
 }
 
 const SectionItem = ({ section }: { section: SectionItemI }) => {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, setOpen] = useState(false);
   const { title, Icon, Component } = section;
   return (
-    <div className="flex flex-col gap-5 rounded border p-4">
+    <div className="flex flex-col gap-5 rounded border p-3">
       <div
         className={clsx(
           "-m-3 flex cursor-pointer items-center justify-between bg-slate-50/50 p-3",
@@ -271,7 +299,7 @@ const SectionItem = ({ section }: { section: SectionItemI }) => {
             "border-b": opened,
           },
         )}
-        onClick={toggle}
+        onClick={() => setOpen(!opened)}
       >
         <div className="flex items-center space-x-2">
           <Icon size={16} className="text-slate-500" />
@@ -283,7 +311,11 @@ const SectionItem = ({ section }: { section: SectionItemI }) => {
           })}
         />
       </div>
-      {opened && Component ? <Component /> : null}
+      {opened && Component ? (
+        <div className="flex p-2">
+          <Component />
+        </div>
+      ) : null}
     </div>
   );
 };
