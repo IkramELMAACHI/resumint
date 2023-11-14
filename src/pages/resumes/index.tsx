@@ -21,7 +21,7 @@ const Resumes: NextPageWithLayout = () => {
                 key={i}
                 className="flex items-center justify-center rounded border p-5"
               >
-                <p>Resume - {i}</p>
+                <span>Resume - {i}</span>
               </p>
             </Link>
           );
