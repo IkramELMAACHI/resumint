@@ -93,7 +93,7 @@ const Educations = () => {
 
       <div className="flex items-center gap-2 space-x-5">
         <TextInput
-          // type="date"
+          type="date"
           value={date.startDate}
           onChange={(e) => {
             setDate({ ...date, startDate: e.target.value });
@@ -104,6 +104,7 @@ const Educations = () => {
         <TextInput
           type="date"
           value={date.endDate}
+          disabled={!!date.isCurrent}
           onChange={(e) => {
             setDate({ ...date, endDate: e.target.value });
           }}
@@ -111,14 +112,18 @@ const Educations = () => {
           className="flex-1"
         />
 
-        <Checkbox
-          // title="Present"
-          checked={date?.isCurrent}
-          onChange={(event) => {
-            console.log({ event });
-            // setDate({ ...date, isCurrent: event.currentTarget.checked });
-          }}
-        />
+        <div className="flex items-center gap-2 text-slate-600">
+          <Checkbox
+            title="Present"
+            checked={date?.isCurrent}
+            onCheckedChange={(checked) => {
+              setDate((prevState) => {
+                return { ...prevState, isCurrent: !!checked };
+              });
+            }}
+          />
+          <Label>Present</Label>
+        </div>
       </div>
     </div>
   );
@@ -141,32 +146,36 @@ const Experiences = () => {
       <Textarea title="Description" />
       <div className="flex items-center gap-2 space-x-5">
         <TextInput
-          // type="date"
+          type="date"
           value={date.startDate}
+          title="Start date"
+          className="flex-1"
           onChange={(e) => {
             setDate({ ...date, startDate: e.target.value });
           }}
-          title="Start date"
-          className="flex-1"
         />
         <TextInput
           type="date"
           value={date.endDate}
+          disabled={!!date.isCurrent}
+          title="End date"
+          className="flex-1"
           onChange={(e) => {
             setDate({ ...date, endDate: e.target.value });
           }}
-          title="End date"
-          className="flex-1"
         />
-
-        <Checkbox
-          title="Present"
-          checked={date?.isCurrent}
-          onCheckedChange={(checked) => {
-            console.log({ checked });
-            // setDate({ ...date, isCurrent: checked });
-          }}
-        />
+        <div className="flex items-center gap-2   text-slate-600">
+          <Checkbox
+            title="Present"
+            checked={date?.isCurrent}
+            onCheckedChange={(checked) => {
+              setDate((prevState) => {
+                return { ...prevState, isCurrent: !!checked };
+              });
+            }}
+          />
+          <Label>Present</Label>
+        </div>
       </div>
     </div>
   );
