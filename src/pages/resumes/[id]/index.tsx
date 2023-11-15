@@ -11,9 +11,8 @@ import {
   StarIcon,
   UserCircleIcon,
 } from "lucide-react";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoMdArrowDropleft, IoMdEye } from "react-icons/io";
 import { BsPersonCircle } from "react-icons/bs";
-
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { TextInput } from "@/components/ui/text-input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,6 +25,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { MdDownload } from "react-icons/md";
 
 const ProfileInformations = () => {
   const { profilePic } = PROFILE;
@@ -54,7 +55,6 @@ const ProfileInformations = () => {
       </div>
       <TextInput title="Job Title" />
       <TextInput title="Phone" />
-
       <Textarea title="Profile Description" />
       <div className="flex flex-1 gap-5">
         <TextInput title="City" className="flex-1" />
@@ -88,9 +88,7 @@ const Educations = () => {
   return (
     <div className="flex flex-1 flex-col gap-5">
       <TextInput title="Title" />
-
       <Textarea title="Description" />
-
       <div className="flex items-center gap-2 space-x-5">
         <TextInput
           type="date"
@@ -271,63 +269,99 @@ const PROFILE = {
 
 const ResumeEditor: NextPageWithLayout = () => {
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-medium">Resume editor</h1>
-      {/* CVs */}
-      <div className="flex gap-6">
-        <div className="flex w-1/2 flex-col gap-6">
-          {PROFILE_SECTIONS?.map((section, i) => {
-            return <SectionItem section={section} key={i} />;
-          })}
-        </div>
+    <>
+      <SubNav />
+      <MainEditor />
+    </>
+  );
+};
 
-        <div className="flex h-[842px] w-[595px] flex-1 items-center justify-center rounded border p-5">
-          CV Preview
+function SubNav() {
+  return (
+    <div className="flex w-full flex-col items-center border-b border-b-slate-100 bg-white px-5 py-4 max-md:max-w-full">
+      <div className="flex w-full max-w-screen-xl items-center justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
+        <div className="my-auto flex items-center gap-1 rounded-full bg-slate-100 px-4 py-1">
+          <IoMdArrowDropleft size={20} />
+          <div className="whitespace-nowrap font-medium leading-6 text-slate-700">
+            Back to dashboard
+          </div>
+        </div>
+        <div className="flex items-stretch justify-between gap-5">
+          <Button className="flex items-center gap-2" variant="outline">
+            <IoMdEye />
+            <span>Preview</span>
+          </Button>
+          <Button>
+            <div className="flex items-center gap-2">
+              <MdDownload />
+              <span> Download PDF</span>
+            </div>
+          </Button>
         </div>
       </div>
     </div>
   );
-};
-
-interface SectionItemI {
-  title: string;
-  value: string;
-  Icon: LucideIcon;
-  Component: () => React.ReactNode;
 }
 
-const SectionItem = ({ section }: { section: SectionItemI }) => {
+function MainEditor() {
   const [opened, setOpen] = useState(false);
-  const { title, Icon, Component } = section;
+
   return (
-    <div className="flex flex-col gap-5 rounded border p-3">
-      <div
-        className={clsx(
-          "-m-3 flex cursor-pointer items-center justify-between bg-slate-50/50 p-3",
-          {
-            "border-b": opened,
-          },
-        )}
-        onClick={() => setOpen(!opened)}
-      >
-        <div className="flex items-center space-x-2">
-          <Icon size={16} className="text-slate-500" />
-          <h1>{title}</h1>
-        </div>
-        <IoIosArrowDown
-          className={clsx("", {
-            "rotate-180": opened,
-          })}
+    <div className="mx-auto my-12 flex w-full  max-w-screen-xl max-md:my-10 max-md:max-w-full">
+      <div className="flex flex-1 flex-col items-stretch max-md:ml-0 max-md:w-full">
+        {PROFILE_SECTIONS.map((section, i) => {
+          const { title, Icon, Component } = section;
+          return (
+            <div
+              key={i}
+              className={clsx(
+                "flex w-full flex-col rounded-lg border border-slate-100  max-md:max-w-full max-md:flex-wrap",
+                {
+                  "mt-6": i !== 0,
+                  "border-b": opened,
+                },
+              )}
+              onClick={() => setOpen(!opened)}
+            >
+              <div
+                className={clsx(
+                  "flex w-full justify-between gap-5 p-5 max-md:max-w-full max-md:flex-wrap",
+                  {
+                    "rounded border-b border-b-slate-50": opened,
+                  },
+                )}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <Icon size={16} className="text-slate-500" />
+                  <h3 className="whitespace-nowrap font-medium leading-6 text-slate-700">
+                    {title}
+                  </h3>
+                </div>
+                <IoIosArrowDown
+                  className={clsx("", {
+                    "rotate-180": opened,
+                  })}
+                />
+              </div>
+              {opened && Component ? (
+                <div className="flex p-3">
+                  <Component />
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+      <div className="ml-5 flex w-[48%] flex-col items-stretch max-md:ml-0 max-md:w-full">
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;"
+          className="aspect-[0.71] w-full overflow-hidden object-contain object-center shadow max-md:mt-10 max-md:max-w-full"
         />
       </div>
-      {opened && Component ? (
-        <div className="flex p-2">
-          <Component />
-        </div>
-      ) : null}
     </div>
   );
-};
+}
 
 ResumeEditor.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;

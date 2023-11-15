@@ -28,8 +28,8 @@ export default function Layout({ children }: LayoutI) {
       </Head>
 
       <Navbar />
-      <main className="">{children}</main>
-      <Footer />
+      {children}
+      {/* <Footer /> */}
     </>
   );
 }
@@ -116,8 +116,4 @@ function Navbar() {
       </div>
     </div>
   );
-}
-
-function Footer() {
-  return <div className="flex flex-1 p-2">Footer</div>;
 }
