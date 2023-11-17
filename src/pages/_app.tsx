@@ -25,7 +25,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session as Session}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        {getLayout(<Component {...pageProps} />)}
+        <div className="bg-slate-50">
+          {getLayout(<Component {...pageProps} />)}
+        </div>
       </ThemeProvider>
     </SessionProvider>
   );

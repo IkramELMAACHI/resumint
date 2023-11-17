@@ -304,52 +304,11 @@ function SubNav() {
 }
 
 function MainEditor() {
-  const [opened, setOpen] = useState(false);
-
   return (
     <div className="mx-auto my-12 flex w-full  max-w-screen-xl max-md:my-10 max-md:max-w-full">
       <div className="flex flex-1 flex-col items-stretch max-md:ml-0 max-md:w-full">
         {PROFILE_SECTIONS.map((section, i) => {
-          const { title, Icon, Component } = section;
-          return (
-            <div
-              key={i}
-              className={clsx(
-                "flex w-full flex-col rounded-lg border border-slate-100  max-md:max-w-full max-md:flex-wrap",
-                {
-                  "mt-6": i !== 0,
-                  "border-b": opened,
-                },
-              )}
-              onClick={() => setOpen(!opened)}
-            >
-              <div
-                className={clsx(
-                  "flex w-full justify-between gap-5 p-5 max-md:max-w-full max-md:flex-wrap",
-                  {
-                    "rounded border-b border-b-slate-50": opened,
-                  },
-                )}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <Icon size={16} className="text-slate-500" />
-                  <h3 className="whitespace-nowrap font-medium leading-6 text-slate-700">
-                    {title}
-                  </h3>
-                </div>
-                <IoIosArrowDown
-                  className={clsx("", {
-                    "rotate-180": opened,
-                  })}
-                />
-              </div>
-              {opened && Component ? (
-                <div className="flex p-3">
-                  <Component />
-                </div>
-              ) : null}
-            </div>
-          );
+          return <SectionItem key={i} section={section} />;
         })}
       </div>
       <div className="ml-5 flex w-[48%] flex-col items-stretch max-md:ml-0 max-md:w-full">
@@ -359,6 +318,51 @@ function MainEditor() {
           className="aspect-[0.71] w-full overflow-hidden object-contain object-center shadow max-md:mt-10 max-md:max-w-full"
         />
       </div>
+    </div>
+  );
+}
+
+interface SectionItemI {
+  title: string;
+  Icon: LucideIcon;
+  Component: () => React.JSX.Element;
+}
+function SectionItem({ section }: { section: SectionItemI }) {
+  const { title, Icon, Component } = section;
+  const [opened, setOpen] = useState(false);
+
+  return (
+    <div
+      className={clsx(
+        "mt-6 flex w-full cursor-pointer flex-col rounded-lg border border-slate-100 bg-white",
+        {
+          "border-b": opened,
+        },
+      )}
+      onClick={() => setOpen(!opened)}
+    >
+      <div
+        className={clsx("flex w-full justify-between gap-5 p-5", {
+          "rounded border-b border-b-slate-50": opened,
+        })}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <Icon size={16} className="text-slate-500" />
+          <h3 className="whitespace-nowrap font-medium leading-6 text-slate-700">
+            {title}
+          </h3>
+        </div>
+        <IoIosArrowDown
+          className={clsx("", {
+            "rotate-180": opened,
+          })}
+        />
+      </div>
+      {opened && Component ? (
+        <div className="flex p-3">
+          <Component />
+        </div>
+      ) : null}
     </div>
   );
 }

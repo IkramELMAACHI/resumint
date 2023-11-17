@@ -29,7 +29,6 @@ export default function Layout({ children }: LayoutI) {
 
       <Navbar />
       {children}
-      {/* <Footer /> */}
     </>
   );
 }
@@ -84,7 +83,7 @@ function Navbar() {
                       alt="@avatar"
                     />
                   </Avatar>
-                  <p className="text-xs">{data.user.name}</p>
+                  {/* <p className="text-xs">{data.user.name}</p> */}
                   <MdOutlineKeyboardArrowDown size={20} />
                 </div>
               </DropdownMenuTrigger>
