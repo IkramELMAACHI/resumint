@@ -4,6 +4,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.$connect();
+  // createProfile();
+  // createResumes();
+  // createSections();
+  // createSectionContents();
 }
 
 main()
@@ -12,10 +16,6 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    // createProfile();
-    // createResumes();
-    // createSections();
-    // createSectionContents();
   });
 
 const createProfile = async () => {
