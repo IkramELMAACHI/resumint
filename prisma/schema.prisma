@@ -11,15 +11,6 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Example {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -35,8 +26,6 @@ model Account {
     id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Resume            Resume? @relation(fields: [resumeId], references: [id])
-    resumeId          String?
 
     @@unique([provider, providerAccountId])
 }
@@ -61,8 +50,8 @@ model User {
     // relations
     accounts      Account[] // next-auth
     sessions      Session[] // next-auth
-    Resumes       Resume[]
-    Profile       Profile?
+    resumes       Resume[]
+    profile       Profile?
 }
 
 model VerificationToken {
@@ -78,7 +67,7 @@ model Profile {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
     fullName   String?
-    email      String?  @unique
+    email      String   @unique
     profilePic String?
     phone      String?
     location   String?
@@ -105,7 +94,6 @@ model Resume {
     userId         String
     user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
     sections       Section[]
-    Account        Account[]
     SectionContent SectionContent[]
 }
 
@@ -128,7 +116,7 @@ model Section {
     // relations
     resumeId       String
     resume         Resume           @relation(fields: [resumeId], references: [id], onDelete: Cascade)
-    SectionContent SectionContent[]
+    sectionContent SectionContent[]
 }
 
 model SectionContent {
