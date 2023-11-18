@@ -9,7 +9,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "seed": "npx ts-node -O '{\"module\":\"commonjs\"}' prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
