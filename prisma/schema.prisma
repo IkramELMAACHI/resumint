@@ -35,6 +35,8 @@ model Account {
     id_token          String? @db.Text
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    Resume            Resume? @relation(fields: [resumeId], references: [id])
+    resumeId          String?
 
     @@unique([provider, providerAccountId])
 }
@@ -56,9 +58,11 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
-    // next-auth
-    accounts      Account[]
-    sessions      Session[]
+    // relations
+    accounts      Account[] // next-auth
+    sessions      Session[] // next-auth
+    Resumes       Resume[]
+    Profile       Profile?
 }
 
 model VerificationToken {
@@ -67,4 +71,80 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Profile {
+    id         String   @id @default(cuid())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    fullName   String?
+    email      String?  @unique
+    profilePic String?
+    phone      String?
+    location   String?
+    jobTitle   String?
+    shortBio   String?
+    //social links
+    website    String?
+    github     String?
+    linkedIn   String?
+    dribbble   String?
+    // relations
+    userId     String   @unique // relation scalar field (used in the `@relation` attribute above)
+    user       User     @relation(fields: [userId], references: [id])
+}
+
+model Resume {
+    id             String           @id @default(cuid())
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    title          String?
+    description    String?
+    templateId     String
+    // relations
+    userId         String
+    user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+    sections       Section[]
+    Account        Account[]
+    SectionContent SectionContent[]
+}
+
+enum SectionType {
+    EDUCATION
+    WORK
+    PROJECTS
+    SKILLS
+    LANGUAGES
+    INTERESTS
+}
+
+model Section {
+    id             String           @id @default(cuid())
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    title          String?
+    description    String?
+    type           SectionType
+    // relations
+    resumeId       String
+    resume         Resume           @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+    SectionContent SectionContent[]
+}
+
+model SectionContent {
+    id            String   @id @default(cuid())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    title         String?
+    description   String?
+    establishment String
+    location      String
+    from          DateTime
+    until         DateTime
+    level         String
+    // relations
+    sectionId     String
+    section       Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+    resumeId      String
+    resume        Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 }
