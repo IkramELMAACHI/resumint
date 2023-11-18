@@ -67,7 +67,7 @@ model Profile {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
     fullName   String?
-    email      String   @unique
+    email      String?
     profilePic String?
     phone      String?
     location   String?
@@ -84,17 +84,16 @@ model Profile {
 }
 
 model Resume {
-    id             String           @id @default(cuid())
-    createdAt      DateTime         @default(now())
-    updatedAt      DateTime         @updatedAt
-    title          String?
-    description    String?
-    templateId     String
+    id          String    @id @default(cuid())
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    title       String?
+    description String?
+    templateId  String
     // relations
-    userId         String
-    user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-    sections       Section[]
-    SectionContent SectionContent[]
+    userId      String
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    sections    Section[]
 }
 
 enum SectionType {
@@ -120,19 +119,17 @@ model Section {
 }
 
 model SectionContent {
-    id            String   @id @default(cuid())
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+    id            String    @id @default(cuid())
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
     title         String?
     description   String?
-    establishment String
-    location      String
-    from          DateTime
-    until         DateTime
-    level         String
+    establishment String?
+    location      String?
+    from          DateTime?
+    until         DateTime?
+    level         String?
     // relations
     sectionId     String
-    section       Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-    resumeId      String
-    resume        Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+    section       Section   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
 }
