@@ -1,13 +1,23 @@
 import type { ReactElement } from "react";
-
 import type { NextPageWithLayout } from "../_app";
 import Layout from "@/layouts/layout";
 import { BiPlus } from "react-icons/bi";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { api } from "@/lib/api";
 
 const Resumes: NextPageWithLayout = () => {
   const { push } = useRouter();
+
+  const { data, isLoading } = api.listResumes.useQuery();
+
+  if (isLoading) {
+    return <div className="">Loading...</div>;
+  }
+
+  if (data) {
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  }
 
   return (
     <div className="flex flex-col gap-5">
