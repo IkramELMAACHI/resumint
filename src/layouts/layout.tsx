@@ -28,7 +28,7 @@ export default function Layout({ children }: LayoutI) {
       </Head>
 
       <Navbar />
-      {children}
+      <div className="flex min-h-screen">{children}</div>
     </>
   );
 }
