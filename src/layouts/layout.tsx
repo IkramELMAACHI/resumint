@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import Image from "next/image";
 
 interface LayoutI {
   children: React.ReactNode;
@@ -36,6 +36,10 @@ export default function Layout({ children }: LayoutI) {
 function Navbar() {
   const { data } = useSession();
   const { push } = useRouter();
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div className="flex w-full  flex-col items-center  border-b border-b-slate-100 bg-white px-5 py-4 max-md:max-w-full">
@@ -77,13 +81,15 @@ function Navbar() {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <div className=" flex items-center space-x-2 rounded   px-2 py-1 hover:bg-slate-50">
-                  <Avatar>
-                    <AvatarImage
-                      sizes="xs"
+                  {data.user.image ? (
+                    <Image
                       src={data.user.image ?? "/"}
-                      alt="@avatar"
+                      alt="pic"
+                      className="rounded-full border border-slate-500"
+                      width={30}
+                      height={30}
                     />
-                  </Avatar>
+                  ) : null}
                   {/* <p className="text-xs">{data.user.name}</p> */}
                   <MdOutlineKeyboardArrowDown size={20} />
                 </div>
