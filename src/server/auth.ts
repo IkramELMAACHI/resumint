@@ -40,21 +40,26 @@ export const authOptions: NextAuthOptions = {
       };
     },
     signIn: async ({ user }) => {
-      const _profile = await db.profile.findFirst({
+      const _profile = await db.profile.upsert({
         where: {
+          userId: user?.id,
+        },
+        create: {
+          email: user.email,
+          fullName: user.name,
+          profilePic: user.image,
+          userId: user?.id,
+        },
+        update: {
+          email: user.email,
+          fullName: user.name,
+          profilePic: user.image,
           userId: user?.id,
         },
       });
 
       if (!_profile) {
-        await db.profile.create({
-          data: {
-            email: user.email,
-            fullName: user.name,
-            profilePic: user.image,
-            userId: user?.id,
-          },
-        });
+        return false;
       }
       return true;
     },
