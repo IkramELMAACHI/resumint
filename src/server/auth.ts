@@ -39,6 +39,25 @@ export const authOptions: NextAuthOptions = {
         },
       };
     },
+    signIn: async ({ user }) => {
+      const _profile = await db.profile.findFirst({
+        where: {
+          userId: user?.id,
+        },
+      });
+
+      if (!_profile) {
+        await db.profile.create({
+          data: {
+            email: user.email,
+            fullName: user.name,
+            profilePic: user.image,
+            userId: user?.id,
+          },
+        });
+      }
+      return true;
+    },
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
