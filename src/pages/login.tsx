@@ -24,7 +24,7 @@ export default function LogIn() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <Button
+          {/* <Button
             variant="outline"
             className="flex items-center space-x-2 bg-blue-600 text-white hover:bg-blue-600  hover:text-white"
             onClick={() => void signIn("linkedin")}
@@ -34,7 +34,7 @@ export default function LogIn() {
               size={25}
             />
             <p className="text-sm">Sign in with LinkedIn</p>
-          </Button>
+          </Button> */}
           <Button
             variant="outline"
             className="flex items-center space-x-2"
