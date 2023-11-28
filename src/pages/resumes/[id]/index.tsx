@@ -269,10 +269,10 @@ const PROFILE = {
 
 const ResumeEditor: NextPageWithLayout = () => {
   return (
-    <>
+    <div className="flex flex-1 flex-col">
       <SubNav />
       <MainEditor />
-    </>
+    </div>
   );
 };
 

@@ -36,10 +36,11 @@ export default function Layout({ children }: LayoutI) {
 function Navbar() {
   const { data } = useSession();
   const { push } = useRouter();
+
   return (
     <div className="flex w-full  flex-col items-center  border-b border-b-slate-100 bg-white px-5 py-4 max-md:max-w-full">
       <div className="mx-auto flex w-full max-w-screen-xl gap-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="118"
@@ -61,7 +62,7 @@ function Navbar() {
               d="M32.726 9.502h-3.02l.713 1.327h.108c1.035 0 1.928-.151 2.677-.453l-.478-.874Z"
             />
           </svg>
-        </div>
+        </Link>
         <ul className="flex grow gap-5 border-l border-l-slate-100 px-8 py-2.5 max-md:max-w-full max-md:flex-wrap max-md:px-5">
           <li className="text-sm font-medium leading-5 text-slate-700">Home</li>
           <li className="text-sm font-medium leading-5 text-green-600">

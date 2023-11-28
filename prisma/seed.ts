@@ -5,23 +5,14 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.$connect();
-  const user = await prisma.user.findFirst();
+  const user = await prisma.user.findFirstOrThrow();
+
   if (!user) {
     console.log("no user found");
     return;
   }
 
   const userId = user.id;
-
-  // Profile
-  await prisma.profile.deleteMany();
-  await prisma.profile.create({
-    data: {
-      fullName: "Ikram EL MAACHI",
-      email: "ikram.elmaachi01@gmail.com",
-      userId,
-    },
-  });
 
   // Resume
   await prisma.resume.deleteMany();
@@ -46,7 +37,7 @@ async function main() {
     return;
   }
   // fetch resume
-  const resume = await prisma.resume.findFirst({});
+  const resume = await prisma.resume.findFirst();
   if (!resume) {
     console.log("no resume found");
     return;
@@ -178,24 +169,24 @@ async function main() {
       {
         title: "English",
         description: "",
-        level: "",
+        level: "100",
         sectionId: languageSection.id,
       },
       {
         title: "Portuguese",
-        description: "",
+        description: "80",
         level: "",
         sectionId: languageSection.id,
       },
       {
         title: "Leadership And The Ability To Take Initiative",
         description: "",
-        level: "",
+        level: "100",
         sectionId: skillsSection.id,
       },
       {
         title: "Critical Thinking And Analytical Skills",
-        description: "",
+        description: "50",
         level: "",
         sectionId: skillsSection.id,
       },

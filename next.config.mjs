@@ -18,7 +18,7 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["cdn.dribbble.com", "cdn.builder.io"],
+    domains: ["cdn.dribbble.com", "cdn.builder.io", "lh3.googleusercontent.com"],
   },
 };
 
