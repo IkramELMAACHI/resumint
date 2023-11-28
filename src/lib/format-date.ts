@@ -56,7 +56,7 @@ export function fromDistance(date = new Date()) {
 }
 
 /*Apr 25 - May 2, 2020 */
-export function formatFullDate(start = null, end = null) {
+export function formatFullDate(start = new Date(), end = new Date()) {
   if (start && end) {
     return `${format(new Date(start), "dd MMM")} - ${format(
       new Date(end),
@@ -65,7 +65,7 @@ export function formatFullDate(start = null, end = null) {
   }
 
   if (start) {
-    return formatDate(start);
+    return `${formatDate(start)} - present`;
   }
 
   return null;

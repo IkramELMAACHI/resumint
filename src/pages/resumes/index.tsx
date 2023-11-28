@@ -7,7 +7,12 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Profile, Resume, Section, SectionContent } from "@prisma/client";
+import {
+  type Profile,
+  type Resume,
+  type Section,
+  type SectionContent,
+} from "@prisma/client";
 import { formatFullDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
 import { CopyIcon, DownloadIcon, EditIcon } from "lucide-react";
@@ -22,7 +27,11 @@ const Resumes: NextPageWithLayout = () => {
   const resumes = data?.resumes;
   const profile = data?.profile;
 
-  if (isLoading) {
+  if (!profile) {
+    return null;
+  }
+
+  if (data ?? isLoading) {
     return (
       <div className="grid grid-cols-4 gap-5">
         {[1, 2, 3, 4].map((i) => {
@@ -41,10 +50,10 @@ const Resumes: NextPageWithLayout = () => {
     <div className="mx-auto flex flex-1 flex-col gap-5 p-5">
       <h1 className="self-start text-2xl font-medium">Resumes</h1>
       <div className="grid grid-cols-2 items-start justify-start gap-5">
-        {resumes?.map((resume, i) => {
+        {resumes?.map((resume: ResumeT, i: number) => {
           return (
             <div className="relative flex" key={i}>
-              <ResumeItem resume={resume} profile={profile as Profile} />
+              <ResumeItem resume={resume} profile={profile} />
               <div className="absolute left-[50%] flex flex-col gap-2">
                 <h3 className="text-base font-medium">{resume.title}</h3>
                 <span className="text-xs">Edited two week ago</span>
@@ -147,30 +156,31 @@ function Content({ resume }: { resume: ResumeT }) {
           <div className="mt-8 flex flex-col" key={i}>
             <h3 className="text-lg font-medium">{sec.title}</h3>
             <div className="mt-3.5 flex flex-col gap-1">
-              {sectionContent &&
-                sectionContent.map((cont, i) => {
-                  const { title, from, until, establishment, description } =
-                    cont;
-                  return (
-                    <div className="mt-2 flex flex-col" key={i}>
-                      <span className="text-sm font-medium">
-                        {establishment}
-                      </span>
-                      <div className="flex justify-between">
-                        <span className="text-sm">{title}</span>
+              {sectionContent
+                ? sectionContent.map((cont: SectionContent, i) => {
+                    const { title, from, until, establishment, description } =
+                      cont;
 
-                        <div className="text-xs text-slate-500">
-                          <span className="">
-                            {formatFullDate(from as any, until as any)}
-                          </span>
+                    return (
+                      <div className="mt-2 flex flex-col" key={i}>
+                        <span className="text-sm font-medium">
+                          {establishment}
+                        </span>
+                        <div className="flex justify-between">
+                          <span className="text-sm">{title}</span>
+                          {from && (
+                            <div className="text-xs text-slate-500">
+                              {formatFullDate(from, until ?? new Date())}
+                            </div>
+                          )}
                         </div>
+                        <p className="px-2 text-justify text-[13px]">
+                          {description}
+                        </p>
                       </div>
-                      <p className="px-2 text-justify text-[13px]">
-                        {description}
-                      </p>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                : null}
             </div>
           </div>
         );
@@ -197,13 +207,7 @@ function Content({ resume }: { resume: ResumeT }) {
   );
 }
 
-function Sidebar({
-  resume,
-  profile,
-}: {
-  resume: Resume & Record<string, any>;
-  profile: Profile;
-}) {
+function Sidebar({ resume, profile }: { resume: ResumeT; profile: Profile }) {
   if (!profile) {
     return null;
   }
@@ -230,12 +234,13 @@ function Sidebar({
   const skills = skillSection ? skillSection.sectionContent : [];
   const languages = languageSection ? languageSection.sectionContent : [];
 
-  const isSocial = dribbble || linkedIn || github;
+  const isSocial = dribbble ?? linkedIn ?? github;
+
   return (
     <>
       <div className="flex flex-col gap-3">
         <Image
-          src={profilePic || "/"}
+          src={profilePic ?? "/"}
           alt="pic"
           className="rounded-full border border-slate-500"
           width={80}

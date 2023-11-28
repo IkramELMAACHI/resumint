@@ -27,6 +27,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { MdDownload } from "react-icons/md";
+import Image from "next/image";
 
 const ProfileInformations = () => {
   const { profilePic } = PROFILE;
@@ -312,8 +313,11 @@ function MainEditor() {
         })}
       </div>
       <div className="ml-5 flex w-[48%] flex-col items-stretch max-md:ml-0 max-md:w-full">
-        <img
-          loading="lazy"
+        <Image
+          width={100}
+          height={100}
+          alt="img"
+          // loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b7a355db-1165-4a25-9fe7-540d9f5f304d?apiKey=b4774bd3ec384adea96ede89c16c6bc7&amp;"
           className="aspect-[0.71] w-full overflow-hidden object-contain object-center shadow max-md:mt-10 max-md:max-w-full"
         />
