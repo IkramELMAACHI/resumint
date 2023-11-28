@@ -163,7 +163,7 @@ const ResumeItem = ({
         )}
         {sections.map((sec: SectionT, i: number) => {
           return (
-            <div className="mt-8 flex flex-col">
+            <div className="mt-8 flex flex-col" key={i}>
               <h3 className="text-lg font-medium">{sec.title}</h3>
               <SectionContentItem sectionContent={sec.sectionContent} key={i} />
             </div>
